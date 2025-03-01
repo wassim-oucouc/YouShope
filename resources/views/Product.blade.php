@@ -345,7 +345,6 @@
   
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-      // Éléments DOM
       const cartPanel = document.querySelector('.cart-panel');
       const cartOverlay = document.querySelector('.cart-overlay');
       const cartIcon = document.getElementById('cart-icon');
