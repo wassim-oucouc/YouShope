@@ -365,14 +365,11 @@
 
       let count = 0;
       
-      // Variables
       let cartItemsCount = 0;
       let selectedSize = null;
       
-      // Fonctions
       function toggleCart() {
         cartPanel.classList.toggle('open');
-        // cartOverlay.classList.toggle('hidden');
         cartOverlay.classList.toggle('open');
       }
       
@@ -413,10 +410,8 @@
         itemQty.value = qty + 1;
       });
       
-      // Gestion des tailles
       sizeOptions.forEach(button => {
         button.addEventListener('click', function() {
-          // Supprimer la classe active de tous les boutons
           sizeOptions.forEach(btn => {
             btn.classList.remove('bg-indigo-500', 'text-white');
             btn.classList.add('text-gray-700');
