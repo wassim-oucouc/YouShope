@@ -150,21 +150,14 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">       
       <div class="grid grid-cols-1 md:grid-cols-2 gap-12">         
         <div>           
-          <img src="https://storage.googleapis.com/a1aa/image/0O_NScPD-SdowzU7iZ2OZe5eS79pFA2hNGl7cHYIo4o.jpg" alt="Urban Noir Premium Hoodie" id = "image"class="image w-full h-auto rounded-lg shadow-lg">         
+          <img src="{{$Produit->Image}}" alt="Urban Noir Premium Hoodie" id = "image"class="image w-full h-auto rounded-lg shadow-lg">         
         </div>         
         <div>           
-          <h2 id = "title" class="title text-3xl font-bold text-gray-900">Urban Noir Premium Hoodie</h2>           
-          <div class="flex items-center mt-4">             
-            <div class="flex text-yellow-400">               
-              <i class="fas fa-star"></i>               
-              <i class="fas fa-star"></i>               
-              <i class="fas fa-star"></i>               
-              <i class="fas fa-star"></i>               
-              <i class="fas fa-star-half-alt"></i>             
-            </div>             
-            <span class="text-gray-500 ml-2">(42 avis)</span>           
+          <h2 id = "title" class="title text-3xl font-bold text-gray-900">{{$Produit->Titre}}</h2>           
+          <div class="flex items-center mt-4">                          
+            <span class="text-gray-500 ml-2">Categorie : {{$Produit->Categorie->nom}}</span>           
           </div>           
-          <p id = "description" class="description mt-6 text-gray-600">Découvrez notre Urban Noir Premium Hoodie, un mélange parfait de style et de confort. Fabriqué avec des matériaux de haute qualité, ce hoodie est conçu pour ceux qui veulent se démarquer.</p>                      
+          <p id = "description" class="description mt-6 text-gray-600">{{$Produit->Description}}</p>                      
           
           <!-- Tailles disponibles -->           
           <div class="mt-6">             
@@ -189,7 +182,7 @@
           </div>                      
           
           <div class="mt-6">             
-            <span class="prix text-3xl font-bold text-gray-900">89,99 €</span>           
+            <span class="prix text-3xl font-bold text-gray-900">{{$Produit->Prix}}$</span>           
           </div>                      
           
           <div class="mt-6">             
@@ -386,7 +379,6 @@
    
    
       
-      // Event Listeners
       cartIcon.addEventListener('click', toggleCart);
       closeCartBtn.addEventListener('click', toggleCart);
       cartOverlay.addEventListener('click', toggleCart);
@@ -430,11 +422,9 @@
             btn.classList.add('text-gray-700');
           });
           
-          // Ajouter la classe active au bouton cliqué
           this.classList.add('bg-indigo-500', 'text-white');
           this.classList.remove('text-gray-700');
           
-          // Enregistrer la taille sélectionnée
           selectedSize = this.dataset.size;
         });
       });

@@ -287,9 +287,11 @@
       @foreach($products as $product)
      <div class="product-card bg-white rounded-xl overflow-hidden shadow transition duration-300">
       <div class="relative">
-       <img alt="Urban Noir Premium Hoodie" class="w-full h-80 object-cover" height="600" src="{{$product->Image}}" width="500"/>
+      <a href="/item/{{$product->id}}">
+       <img  alt="Urban Noir Premium Hoodie" class="w-full h-80 object-cover" height="600" src="{{$product->Image}}" width="500"/>
        <div class="absolute top-4 right-4 bg-indigo-600 text-white text-xs uppercase font-bold px-3 py-1 rounded-full">
         Nouveau
+        
        </div>
        <div class="absolute inset-0 bg-black bg-opacity-20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
         <button class="bg-white p-3 rounded-full text-gray-800 mx-2 hover:bg-gray-100 focus:outline-none transition duration-300 transform hover:scale-110">
@@ -334,7 +336,9 @@
         </button>
        </div>
       </div>
+      </a>
      </div>
+
      @endforeach
     </div>
    </div>
