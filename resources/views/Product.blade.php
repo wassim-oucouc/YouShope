@@ -110,7 +110,7 @@
     
     <div class="flex-1 overflow-y-auto p-4" id="cart-items">       
       <!-- Les éléments du panier seront ajoutés ici dynamiquement -->
-      <div class="flex py-5 border-b border-gray-200">
+      <div class="cart flex py-5 border-b border-gray-200">
         <div class="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md">
           <img src="https://storage.googleapis.com/a1aa/image/0O_NScPD-SdowzU7iZ2OZe5eS79pFA2hNGl7cHYIo4o.jpg" alt="Urban Noir Premium Hoodie" class="h-full w-full object-cover object-center">
         </div>
@@ -132,6 +132,7 @@
           </div>
         </div>
       </div>
+      d
     </div>          
     
     <div class="border-t border-gray-200 p-4 bg-gray-50">       
@@ -153,7 +154,8 @@
           <img src="{{$Produit->Image}}" alt="Urban Noir Premium Hoodie" id = "image"class="image w-full h-auto rounded-lg shadow-lg">         
         </div>         
         <div>           
-          <h2 id = "title" class="title text-3xl font-bold text-gray-900">{{$Produit->Titre}}</h2>           
+          <h2 id = "title" class="title text-3xl font-bold text-gray-900">{{$Produit->Titre}}</h2>
+          <input type="hidden" value = "{{$Produit->id}}" class ="id" name="id">         
           <div class="flex items-center mt-4">                          
             <span class="text-gray-500 ml-2">Categorie : {{$Produit->Categorie->nom}}</span>           
           </div>           
@@ -182,7 +184,7 @@
           </div>                      
           
           <div class="mt-6">             
-            <span class="prix text-3xl font-bold text-gray-900">{{$Produit->Prix}}$</span>           
+            <span id = "prix" class="prix text-3xl font-bold text-gray-900">{{$Produit->Prix}}$</span>           
           </div>                      
           
           <div class="mt-6">             
@@ -345,84 +347,98 @@
   
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-      const cartPanel = document.querySelector('.cart-panel');
-      const cartOverlay = document.querySelector('.cart-overlay');
-      const cartIcon = document.getElementById('cart-icon');
-      const closeCartBtn = document.getElementById('close-cart');
-      const cartCount = document.getElementById('cart-count');
-      const addToCartMainBtn = document.getElementById('add-to-cart-main');
-      const addToCartOtherBtns = document.querySelectorAll('.add-to-cart-other');
-      const decreaseQtyBtn = document.getElementById('decrease-qty');
-      const increaseQtyBtn = document.getElementById('increase-qty');
-      const itemQty = document.getElementById('item-qty');
-      const sizeOptions = document.querySelectorAll('.size-option');
+  const cartPanel = document.querySelector('.cart-panel');
+  const cartOverlay = document.querySelector('.cart-overlay');
+  const cartIcon = document.getElementById('cart-icon');
+  const closeCartBtn = document.getElementById('close-cart');
+  const cartCount = document.getElementById('cart-count');
+  const addToCartMainBtn = document.getElementById('add-to-cart-main');
+  const addToCartOtherBtns = document.querySelectorAll('.add-to-cart-other');
+  const decreaseQtyBtn = document.getElementById('decrease-qty');
+  const increaseQtyBtn = document.getElementById('increase-qty');
+  const itemQty = document.getElementById('item-qty');
+  const sizeOptions = document.querySelectorAll('.size-option');
+  const cartItems = document.querySelector('#cart-items');
+  const totalCart = document.querySelector('#cart-total');
 
-      const title = document.querySelector('#title');
-      const image = document.querySelector('#image');
-      console.log(title);
-      // const description = document.queryselector('#description');
+  const title = document.querySelector('#title');
+  const image = document.querySelector('#image');
+  const prix = document.querySelector('#prix');
+  const idProduit = document.querySelector('.id').value;
 
-      let count = 0;
-      
-      let cartItemsCount = 0;
-      let selectedSize = null;
-      
-      function toggleCart() {
-        cartPanel.classList.toggle('open');
-        cartOverlay.classList.toggle('open');
-      }
-      
-   
-   
-      
-      cartIcon.addEventListener('click', toggleCart);
-      closeCartBtn.addEventListener('click', toggleCart);
-      cartOverlay.addEventListener('click', toggleCart);
-      
-      addToCartMainBtn.addEventListener('click', function() {
-        count++;
-        cartCount.textContent =  count ;
+  let cartItemsArray = JSON.parse(localStorage.getItem('cartItems')) || [];
 
-        let productobject = {
-          'Title' : title.textContent,
-          'image' : image.src,
-
-          
-        };
-
-        console.log(productobject);
-
-
-    
-      });
-      
-      
-      decreaseQtyBtn.addEventListener('click', function() {
-        let qty = parseInt(itemQty.value);
-        if (qty > 1) {
-          itemQty.value = qty - 1;
-        }
-      });
-      
-      increaseQtyBtn.addEventListener('click', function() {
-        let qty = parseInt(itemQty.value);
-        itemQty.value = qty + 1;
-      });
-      
-      sizeOptions.forEach(button => {
-        button.addEventListener('click', function() {
-          sizeOptions.forEach(btn => {
-            btn.classList.remove('bg-indigo-500', 'text-white');
-            btn.classList.add('text-gray-700');
-          });
-          
-          this.classList.add('bg-indigo-500', 'text-white');
-          this.classList.remove('text-gray-700');
-          
-          selectedSize = this.dataset.size;
-        });
-      });
+  function updateCart() {
+    cartItems.innerHTML = '';
+    let total = 0;
+    cartItemsArray.forEach(item => {
+      total += parseFloat(item.prix);
+      cartItems.innerHTML += `
+        <div class="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md">
+          <img src="${item.image}" alt="${item.Title}" class="h-full w-full object-cover object-center">
+        </div>
+        <div class="ml-4 flex flex-1 flex-col">
+          <div>
+            <div class="flex justify-between text-base font-medium text-gray-900">
+              <h3>${item.Title}</h3>
+              <p class="ml-4">${item.prix} €</p>
+            </div>
+            <p class="mt-1 text-sm text-gray-500">Taille: ${item.Selectedsize}</p>
+          </div>
+          <div class="flex flex-1 items-end justify-between text-sm">
+            <div class="flex items-center space-x-2">
+              <p class="text-gray-500">Qté 1</p>
+            </div>
+            <button type="button" class="font-medium text-indigo-600 hover:text-indigo-500" onclick="removeItem('${item.id_produit}')">
+              <i class="fas fa-trash"></i>
+            </button>
+          </div>
+        </div>`;
     });
+    totalCart.textContent = `Total: ${total.toFixed(2)} €`;
+    cartCount.textContent = cartItemsArray.length;
+  }
+
+
+
+  function toggleCart() {
+    cartPanel.classList.toggle('open');
+    cartOverlay.classList.toggle('open');
+  }
+
+  let selectedSize = null;
+  sizeOptions.forEach(element => {
+    element.addEventListener('click', function() {
+      if (selectedSize) {
+        selectedSize.style.borderColor = ''; 
+      }
+      element.style.borderColor = 'red'; 
+      selectedSize = element;
+    });
+  });
+
+  addToCartMainBtn.addEventListener('click', function() {
+    const productObject = {
+      id_produit: idProduit,
+      Title: title.textContent,
+      image: image.src,
+      prix: parseFloat(prix.textContent),
+      Selectedsize: selectedSize.textContent,
+    };
+
+    cartItemsArray.push(productObject);
+    localStorage.setItem('cartItems', JSON.stringify(cartItemsArray)); // Save updated cart to localStorage
+
+    updateCart(); 
+  });
+
+  cartIcon.addEventListener('click', toggleCart);
+  closeCartBtn.addEventListener('click', toggleCart);
+  cartOverlay.addEventListener('click', toggleCart);
+
+  updateCart();
+});
+
   </script>
 </body>
 </html>
