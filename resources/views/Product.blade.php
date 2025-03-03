@@ -427,7 +427,7 @@
     };
 
     cartItemsArray.push(productObject);
-    localStorage.setItem('cartItems', JSON.stringify(cartItemsArray)); // Save updated cart to localStorage
+    localStorage.setItem('cartItems', JSON.stringify(cartItemsArray));
 
     updateCart(); 
   });
