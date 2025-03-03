@@ -9,14 +9,14 @@ return new class extends Migration
     public function up()
     {
         Schema::table('User', function (Blueprint $table) {
-            $table->renameColumn('Email', 'email'); // Renommer la colonne 'email' en 'Email'
+            $table->renameColumn('Email', 'email'); 
         });
     }
 
     public function down()
     {
         Schema::table('User', function (Blueprint $table) {
-            $table->renameColumn('Email', 'email'); // Annuler la migration si nécessaire
+            $table->renameColumn('Email', 'email'); 
         });
     }
 };
