@@ -9,16 +9,15 @@ class Utilisateur extends Authenticatable
 {
     use HasFactory;
 
-    protected $table = "User";  // Assurez-vous que la table s'appelle bien "User"
+    protected $table = "User";
 
-    // Utilisez le bon nom de colonne ici
     protected $fillable = ['Prenom', 'Nom', 'email', 'Password', 'Image', 'id_role', 'Status', 'Created_at', 'Updated_at'];
 
-    protected $hidden = ['Password'];  // Masquer le mot de passe
+    protected $hidden = ['Password']; 
 
     public function getAuthIdentifierName()
     {
-        return 'email';  // Utilisez "Email" au lieu de "email" si c'est le nom de la colonne dans la base de données
+        return 'email';
     }
 }
 

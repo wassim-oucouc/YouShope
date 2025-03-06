@@ -139,10 +139,12 @@
       <div class="flex justify-between font-bold text-lg mb-4">         
         <span>Total</span>         
         <span id="cart-total">89,99 €</span>       
-      </div>       
+      </div>  
+      <a href="/panier">    
       <button class="bg-indigo-600 text-white w-full py-3 rounded-lg font-medium hover:bg-indigo-700 transition duration-300">         
         Passer la commande       
       </button>     
+      </a> 
     </div>   
   </div>    
   
@@ -150,26 +152,34 @@
   <section class="pt-24 pb-16 bg-white">     
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">       
       <div class="grid grid-cols-1 md:grid-cols-2 gap-12">         
-        <div>           
-          <img src="{{$Produit->Image}}" alt="Urban Noir Premium Hoodie" id = "image"class="image w-full h-auto rounded-lg shadow-lg">         
+        <div>
+        <form method = "POST" action="/item/{{$Produit->id}}">
+          @csrf           
+          <img name = "Image" src="{{$Produit->Image}}" alt="Urban Noir Premium Hoodie" id = "image"class="image w-full h-auto rounded-lg shadow-lg">
+          <input type="hidden" name="Image" value = "{{$Produit->Image}}">         
         </div>         
         <div>           
-          <h2 id = "title" class="title text-3xl font-bold text-gray-900">{{$Produit->Titre}}</h2>
+          <h2 name = "title" id = "title" class="title text-3xl font-bold text-gray-900">{{$Produit->Titre}}</h2>
+          <input type="hidden" value = "{{$Produit->Titre}}" name="title">
           <input type="hidden" value = "{{$Produit->id}}" class ="id" name="id">         
           <div class="flex items-center mt-4">                          
-            <span class="text-gray-500 ml-2">Categorie : {{$Produit->Categorie->nom}}</span>           
+            <span name = "categorie" class="text-gray-500 ml-2">Categorie : {{$Produit->Categorie->nom}}</span>   
+            <input type="hidden" name="categorie" value = "{{$Produit->Categorie->nom}}">        
           </div>           
-          <p id = "description" class="description mt-6 text-gray-600">{{$Produit->Description}}</p>                      
+          <p name = "Description"  id = "description" class="description mt-6 text-gray-600">{{$Produit->Description}}</p>                      
           
           <!-- Tailles disponibles -->           
           <div class="mt-6">             
             <h3 class="text-sm text-gray-900 font-medium">Taille</h3>             
             <div class="grid grid-cols-5 gap-2 mt-2">               
-              <button class="size-option border border-gray-300 rounded-md py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:border-indigo-500" data-size="XS">XS</button>               
-              <button class="size-option border border-gray-300 rounded-md py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:border-indigo-500" data-size="S">S</button>               
-              <button class="size-option border border-gray-300 rounded-md py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:border-indigo-500" data-size="M">M</button>               
-              <button class="size-option border border-gray-300 rounded-md py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:border-indigo-500" data-size="L">L</button>               
-              <button class="size-option border border-gray-300 rounded-md py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:border-indigo-500" data-size="XL">XL</button>             
+            <label for="Taille">Taille:</label>
+<select name="Taille" id="Taille">
+  <option value="XS">XS</option>
+  <option value="S">S</option>
+  <option value="M">M</option>
+  <option value="M">L</option>
+  <option value="M">XL</option>
+</select>       
             </div>           
           </div>                      
           
@@ -177,20 +187,18 @@
           <div class="mt-6">             
             <h3 class="text-sm text-gray-900 font-medium">Quantité</h3>             
             <div class="flex items-center mt-2">               
-              <button id="decrease-qty" class="bg-gray-200 px-3 py-1 rounded-l-md">-</button>               
-              <input type="text" id="item-qty" value="1" class="Quantity w-12 text-center border-t border-b border-gray-300 py-1" readonly>               
-              <button id="increase-qty" class="bg-gray-200 px-3 py-1 rounded-r-md">+</button>             
+            <input value = "1" type="number" id="Quantity" name="quantity" min="1">
             </div>           
           </div>                      
           
           <div class="mt-6">             
-            <span id = "prix" class="prix text-3xl font-bold text-gray-900">{{$Produit->Prix}}$</span>           
-          </div>                      
-          
-          <div class="mt-6">             
-            <button id="add-to-cart-main" class="bg-indigo-600 text-white px-8 py-4 rounded-lg font-medium hover:bg-indigo-700 transition duration-300">               
+            <span name = "Prix" id = "prix" class="prix text-3xl font-bold text-gray-900">{{$Produit->Prix}}$</span>
+            <input type="hidden" name="prix" value = "{{$Produit->Prix}}">           
+          </div>   
+          <div class="mt-6">      
+            <button type = "submit" name = "send" id="add-to-cart-main" class="bg-indigo-600 text-white px-8 py-4 rounded-lg font-medium hover:bg-indigo-700 transition duration-300">               
               <i class="fas fa-shopping-cart"></i> Ajouter au panier             
-            </button>           
+  </form>          
           </div>         
         </div>       
       </div>     
@@ -306,8 +314,7 @@
               </button>             
             </div>           
           </div>         
-        </div>         
-        
+        </div> 
         <!-- Product 4 -->         
         <div class="product-card bg-white rounded-xl overflow-hidden shadow transition duration-300">           
           <div class="relative">             
@@ -334,10 +341,10 @@
             <h3 class="font-semibold text-gray-900 text-lg">Rouge Streetwear Hoodie</h3>             
             <p class="text-gray-500 mt-1">Urban Collection</p>             
             <div class="mt-3 flex justify-between items-center">               
-              <span class="font-bold text-gray-900 text-xl">74,99 €</span>               
+              <span class="font-bold text-gray-900 text-xl">74,99 €</span>       
               <button class="bg-gray-900 text-white p-2 rounded-lg hover:bg-indigo-600 transition duration-300 add-to-cart-other">                 
-                <i class="fas fa-shopping-cart"></i>               
-              </button>             
+                <i class="fas fa-shopping-cart"></i>             
+              </button>      
             </div>           
           </div>         
         </div>       
@@ -346,7 +353,7 @@
   </section>    
   
   <script>
-    document.addEventListener('DOMContentLoaded', function() {
+    setTimeout(() => {
   const cartPanel = document.querySelector('.cart-panel');
   const cartOverlay = document.querySelector('.cart-overlay');
   const cartIcon = document.getElementById('cart-icon');
@@ -364,7 +371,13 @@
   const title = document.querySelector('#title');
   const image = document.querySelector('#image');
   const prix = document.querySelector('#prix');
+  const Taille = document.querySelector('#Taille').value;
   const idProduit = document.querySelector('.id').value;
+  const Quantity = document.querySelector('#Quantity').value;
+  console.log(Quantity);
+
+
+
 
   let cartItemsArray = JSON.parse(localStorage.getItem('cartItems')) || [];
 
@@ -381,23 +394,26 @@
           <div>
             <div class="flex justify-between text-base font-medium text-gray-900">
               <h3>${item.Title}</h3>
-              <p class="ml-4">${item.prix} €</p>
+              <p class="ml-4">${item.prix * item.Quantity} €</p>
             </div>
             <p class="mt-1 text-sm text-gray-500">Taille: ${item.Selectedsize}</p>
           </div>
           <div class="flex flex-1 items-end justify-between text-sm">
             <div class="flex items-center space-x-2">
-              <p class="text-gray-500">Qté 1</p>
+              <p class="text-gray-500">${item.Quantity}</p>
             </div>
-            <button type="button" class="font-medium text-indigo-600 hover:text-indigo-500" onclick="removeItem('${item.id_produit}')">
+            <button id = "delete" type="button" class="delete font-medium text-indigo-600 hover:text-indigo-500">
               <i class="fas fa-trash"></i>
             </button>
           </div>
         </div>`;
     });
-    totalCart.textContent = `Total: ${total.toFixed(2)} €`;
+    totalCart.textContent = `Total: ${total.toFixed(2)}€`;
     cartCount.textContent = cartItemsArray.length;
   }
+
+
+
 
 
 
@@ -417,13 +433,15 @@
     });
   });
 
-  addToCartMainBtn.addEventListener('click', function() {
+  addToCartMainBtn.addEventListener('click', function(){
     const productObject = {
       id_produit: idProduit,
       Title: title.textContent,
       image: image.src,
       prix: parseFloat(prix.textContent),
-      Selectedsize: selectedSize.textContent,
+      Selectedsize: Taille,
+      Quantity: Quantity,
+
     };
 
     cartItemsArray.push(productObject);
@@ -438,7 +456,6 @@
 
   updateCart();
 });
-
   </script>
 </body>
 </html>
