@@ -10,7 +10,7 @@
     <div class="flex flex-col lg:flex-row min-h-screen">
         <!-- Left Image Section -->
         <div class="lg:w-1/2 flex items-center justify-center p-4">
-            <img alt="Image de réservation de salle avec des personnes discutant dans une salle de conférence moderne" class="rounded-lg" height="900" src="https://images.unsplash.com/photo-1483985988355-763728e1935b?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" width="800"/>
+            <img alt="Image de réservation de salle avec des personnes discutant dans une salle de conférence moderne" class="rounded-lg" height="900" src="https://shoezero.com/cdn/shop/articles/two_hoodies.webp?v=1691590215&width=2048" width="800"/>
         </div>
         <!-- Right Form Section -->
         <div class="lg:w-1/2 flex flex-col justify-center p-8">

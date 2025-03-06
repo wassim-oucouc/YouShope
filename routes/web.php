@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use app\Http\Controllers\AdminController;
 use App\Http\Controllers\ProduitController;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 
 /*
@@ -48,4 +49,12 @@ Route::get('/delete/categorie/{id}',[AdminController::class,'DeleteCategorie']);
 Route::get('/home',[ProduitController::class,'ProductsHomeRender']);
 Route::get('/item/{id}',[ProduitController::class,'ProductDetailsRead']);
 // Route::get('/admin/categorie',[AdminController::class,''])
+
+
+Route::get('/panier',[CartController::class,'RenderProductCart']);
+
+
+Route::post('/item/{id}',[CartController::class,'StoreCartSession']);
+
+Route::get('/delete/cart/{id}/{quantité}/{taille}',[CartController::class,'DeleteProduct']);
 require __DIR__.'/auth.php';

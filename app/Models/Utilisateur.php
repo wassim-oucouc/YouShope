@@ -12,6 +12,13 @@ class Utilisateur extends Authenticatable
     protected $table = "User";
 
     protected $fillable = ['Prenom', 'Nom', 'email', 'Password', 'Image', 'id_role', 'Status', 'Created_at', 'Updated_at'];
+
+    protected $hidden = ['Password']; 
+
+    public function getAuthIdentifierName()
+    {
+        return 'email';
+    }
 }
 
 
