@@ -55,7 +55,7 @@ class CartController extends Controller
          return  $item['Size'] != $taille && $item['id'] != $id;
       });
 
-      // dd($filteredarray);
+      // dd($filteredarray);git b
   session()->put('cart', $filteredarray);
 
 //   return redirect('/panier');
