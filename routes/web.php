@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use app\Http\Controllers\AdminController;
 use App\Http\Controllers\ProduitController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\CommandeController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 
 /*
@@ -18,8 +19,8 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 |
 */
 
-Route::get('/', function () {
-    return view('Product');
+Route::get('/checkout', function () {
+    return view('Checkout');
 });
 
 Route::get('/dashboard', function () {
@@ -57,4 +58,9 @@ Route::get('/panier',[CartController::class,'RenderProductCart']);
 Route::post('/item/{id}',[CartController::class,'StoreCartSession']);
 
 Route::get('/delete/cart/{id}/{quantité}/{taille}',[CartController::class,'DeleteProduct']);
+
+
+Route::post('/panier',[CommandeController::class,'StoreCommande']);
+
+
 require __DIR__.'/auth.php';

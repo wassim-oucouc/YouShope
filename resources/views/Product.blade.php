@@ -117,7 +117,7 @@
         <div class="ml-4 flex flex-1 flex-col">
           <div>
             <div class="flex justify-between text-base font-medium text-gray-900">
-              <h3 >{{$Produit->Titre}}</h3>
+              <h3 ></h3>
               <p class="ml-4">89,99 €</p>
             </div>
             <p class="mt-1 text-sm text-gray-500">Taille: M</p>
