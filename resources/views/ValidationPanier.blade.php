@@ -87,23 +87,28 @@
        </thead>
        <tbody id="cart-items">
         @foreach($Product as $Products)
-        <form action="/">
+        <form action="/panier" method = "POST">
+          @csrf
         <tr>
          <td class="py-2 px-4 border-b border-gray-300">
           <div class="flex items-center">
            <img alt="Image of a black hoodie with a minimalist design" class="h-10 w-10 rounded-full mr-4" height="100" src="{{$Products['Image']}}" width="100"/>
+           <input type="hidden" name="image[]" value = "{{$Products['Image']}}">
            <div>
             <p class="text-gray-900">
             {{$Products['title']}}
             </p>
+            <input type="hidden" name="title[]" value = "{{$Products['title']}}">
+            <input type="hidden" name="id[]" value = "{{$Products['id']}}">
             <p class="text-gray-600 text-sm">
             {{$Products['categorie']}}
             </p>
+            <input type="hidden" name="categorie[]" value = "{{$Products['categorie']}}">
            </div>
           </div>
          </td>
          <td class="py-2 px-4 border-b border-gray-300">
-          <select class="bg-gray-100 rounded-full py-1 px-2">
+          <select name = "size[]" class="bg-gray-100 rounded-full py-1 px-2">
            <option selected="{{$Products['Size']}}" value="{{$Products['Size']}}">{{$Products['Size']}}</option>
            <option value="S">S</option>
            <option value="M">M</option>
@@ -113,21 +118,19 @@
           </select>
          </td>
          <td class="py-2 px-4 border-b border-gray-300">
-          <input class="bg-gray-100 rounded-full py-1 px-2 w-16 text-center" min="1" type="number" value="{{$Products['Quantity']}}"/>
+          <input name = "Quantite[]"class=" quantite bg-gray-100 rounded-full py-1 px-2 w-16 text-center" min="1" type="number" value="{{$Products['Quantity']}}"/>
          </td>
-         <td class="py-2 px-4 border-b border-gray-300">
-         {{$Products['Prix']}}$
-         </td>
+         <td class="prix py-2 px-4 border-b border-gray-300">{{$Products['Prix']}}$</td>
+         <input type="hidden" name="prix[]" value = "{{$Products['Prix']}}$">
          <td class="py-2 px-4 border-b border-gray-300">
           <a href="/delete/cart/{{$Products['id']}}/{{$Products['Quantity']}}/{{$Products['Size']}}">
-          <button class="text-red-600 hover:text-red-800 transition duration-300">
+          <button type = "button"class="text-red-600 hover:text-red-800 transition duration-300">
            <i class="fas fa-trash">
            </i>
           </button>
           </a>
          </td>
         </tr>
-        </form>
         @endforeach
        </tbody>
       </table>
@@ -141,17 +144,63 @@
         <span>
          Total
         </span>
-        <span id="cart-total">
-         165,00 €
-        </span>
+        <span id="cart-total">165,00 €</span>
        </div>
-       <button class="bg-yellow-500 text-white w-full py-3 rounded-lg font-medium hover:bg-yellow-600 transition duration-300">
+       <input type="hidden" name="total" id = "total">
+       <button id = "send" name = "send" type = "send" class="bg-yellow-500 text-white w-full py-3 rounded-lg font-medium hover:bg-yellow-600 transition duration-300">
         Passer la commande
        </button>
       </div>
      </div>
     </div>
+    </form>
    </div>
   </section>
+
+  <script>
+document.addEventListener("DOMContentLoaded", function () {
+    const cartItems = document.querySelectorAll("#cart-items tr");
+
+    let totalspan = document.querySelector('#total');
+    let buttonsend = document.querySelector('#send');
+
+    console.log(document.querySelector("#cart-total").textContent);
+
+    buttonsend.addEventListener('click',function(){
+      totalspan.value = document.querySelector("#cart-total").textContent.slice(0, -1);
+    });
+
+    console.log(buttonsend);
+
+    cartItems.forEach((row) => {
+        let quantiteInput = row.querySelector(".quantite");
+        let prixCell = row.querySelector(".prix");
+
+        if (quantiteInput && prixCell) {
+            let prixInitial = parseFloat(prixCell.textContent.slice(0, -1)); 
+
+            quantiteInput.addEventListener("input", function () {
+                let quantite = parseInt(quantiteInput.value);
+                if (quantite < 1) quantite = 1; 
+                let nouveauPrix = (prixInitial * quantite).toFixed(2) + "$";
+                prixCell.textContent = nouveauPrix;
+                updateTotal();
+            });
+        }
+    });
+
+    function updateTotal() {
+        let total = 0;
+        document.querySelectorAll(".prix").forEach((prixCell) => {
+            total += parseFloat(prixCell.textContent.slice(0, -1));
+        });
+        document.querySelector("#cart-total").textContent = total.toFixed(2) + " €";
+    }
+});
+
+
+
+
+    </script>
  </body>
 </html>

@@ -25,14 +25,11 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request)
     {
-        // Authentifie l'utilisateur
         $request->authenticate();
     
-        // Génère une nouvelle session pour des raisons de sécurité
         $request->session()->regenerate();
     
-        // Redirige l'utilisateur vers la page d'accueil ou tableau de bord
-        return redirect()->intended(route('dashboard')); // Assure-toi que la route 'dashboard' existe bien
+        return redirect()->intended(route('dashboard'));
     }
     
     

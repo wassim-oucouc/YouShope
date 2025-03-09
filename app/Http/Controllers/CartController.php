@@ -33,6 +33,7 @@ class CartController extends Controller
    public function RenderProductCart()
    {
       $ProductsCart = session()->get('cart');
+      // dd($ProductsCart);
       $Product = [];
 
       foreach($ProductsCart as $value)
@@ -52,13 +53,13 @@ class CartController extends Controller
       $quantite = $request['quantité'];
 
       $filteredarray = array_filter($ProductsCart,function($item) use($taille,$id,$quantite){
-         return  $item['Size'] != $taille && $item['id'] != $id;
+         return  $item['id'] != $id;
       });
 
       // dd($filteredarray);git b
   session()->put('cart', $filteredarray);
 
-//   return redirect('/panier');
+  return redirect('/panier');
 
 //   dd($ProductsCart);
    }
